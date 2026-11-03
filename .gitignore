@@ -1,0 +1,16 @@
+# Generated test host project (scripts/test.sh)
+.testhost/
+test-results*.xml
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.slnx
+*.user
+
+# OS
+.DS_Store
+Thumbs.db

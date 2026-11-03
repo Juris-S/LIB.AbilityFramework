@@ -1,0 +1,14 @@
+{
+  "name": "com.juris.abilities",
+  "version": "0.0.1",
+  "license": "MIT",
+  "documentationUrl": "https://github.com/Juris-S/LIB.AbilityFramework#readme",
+  "changelogUrl": "https://github.com/Juris-S/LIB.AbilityFramework/blob/main/CHANGELOG.md",
+  "displayName": "Juris Abilities",
+  "description": "Code-first gameplay ability framework: definitions, per-owner instances, per-cast executions, gameplay tags, input intent and a runtime debugger.",
+  "unity": "6000.6",
+  "author": {
+    "name": "Juris-S"
+  },
+  "dependencies": {}
+}
