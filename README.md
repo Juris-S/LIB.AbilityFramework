@@ -1,22 +1,22 @@
 # Juris Abilities (`com.juris.abilities`)
 
-Code-first gameplay ability framework for Unity 6. Loosely inspired by Unreal's Gameplay Ability System, at a fraction of the size.
+A gameplay ability framework for Unity 6. Loosely inspired by Unreal's Gameplay Ability System.
 
-Built to recreate abilities like Cassidy's Deadeye, Tracer's Blink, Dishonored's Blink and Zelda's Recall without rewriting foundations. Ability #N needs new content only: no edits to the controller, input handling, movement arbitration or earlier abilities' interaction rules.
+Built to recreate abilities like Cassidy's Deadeye, Dishonored's Blink, and Zelda's Recall with minimal boilerplate.
 
 ## Features
 
-- **Three state levels.** A shared `AbilityDefinition` (ScriptableObject, immutable at runtime), a per-owner `AbilityInstance` (cooldown, charges) and a per-cast `IAbilityExecution` (your ability's own state machine). Each ability keeps its logic in its own state machine.
+- **Three state levels.** A shared `AbilityDefinition` (ScriptableObject), a per-owner `AbilityInstance` (cooldown, charges) and a per-cast `IAbilityExecution` (ability's own state machine). Each ability keeps its logic in its own state machine.
 - **Gameplay tags.** Abilities interact through granted, blocked-by, block and cancel tags, with interrupt priorities, so abilities stay unaware of each other.
 - **Cooldowns, charges and costs.** Multiple charges, shared cooldown groups, resource costs with cancel refunds. All validated centrally in `AbilityController`.
-- **Movement arbitration.** Abilities request control of a character's motor, add speed multipliers and teleport through one `MovementArbiter`, so a dash and a stun cannot fight.
-- **Rewind.** `IRewindable` with an explicit `BeginRewind` / `Seek` / `EndRewind(commit)` contract, so a cancelled ability always leaves physics in a valid state. `RigidbodyRewindable` included.
+- **Movement arbitration.** Abilities request control of a character's motor, add speed multipliers, and teleport through one `MovementArbiter`, so a dash and a stun cannot fight.
+- **Rewind.** `IRewindable` with an explicit `BeginRewind` / `Seek` / `EndRewind(commit)`, so a canceled ability always leaves physics in a valid state. `RigidbodyRewindable` included.
 - **Targeting and damage.** `ITargetable` queries with line of sight, plus a `DamageService` with outgoing and incoming modifiers.
-- **Input as intent.** Input arrives as buffered `AbilityCommand`s. An optional Input System binding ships in its own assembly.
-- **No hidden globals.** No `Time.deltaTime`, singletons or `FindObjectOfType` in ability logic. Time comes from `IGameClock`, dependencies from per-controller `AbilityServices`.
+- **Input.** Input is a buffered `AbilityCommand`s. An optional Input System binding ships in its own assembly.
+- **No hidden globals.** No `Time.deltaTime`, singletons, or `FindObjectOfType` in ability logic. Time comes from `IGameClock`, dependencies from per-controller `AbilityServices`.
 - **Zero steady-state GC per cast.** Each instance reuses one execution.
-- **Runtime debugger.** `AbilityDebugOverlay` shows instances, cooldowns, tags and each execution's internal state.
-- **Tested.** 82 EditMode tests.
+- **Runtime debugger.** `AbilityDebugOverlay` shows instances, cooldowns, tags, and each execution's internal state.
+- **Tests?** 82 EditMode tests and counting.
 
 ## Install
 
@@ -65,9 +65,9 @@ public sealed class PulseAbility : AbilityDefinition
 }
 ```
 
-Create the asset, add an `AbilitySystem` component to your character and assign the asset to a slot. Cooldown, charges, cost and tags are already on the definition's inspector. Executions are reused across casts, so `Start` must reset all state, and `Cancel` must release everything acquired since `Start`.
+Create the asset, add an `AbilitySystem` component to your character, and assign the asset to a slot. Cooldown, charges, cost and tags are already on the definition's inspector. Executions are reused across casts, so `Start` must reset all state, and `Cancel` must release everything acquired since `Start`.
 
-To drive a controller without a scene (for example in a test):
+To drive a controller without a scene (for example, in a test):
 
 ```csharp
 var clock = new ManualGameClock();
